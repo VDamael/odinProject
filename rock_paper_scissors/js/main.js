@@ -1,8 +1,6 @@
 let humanScore = 0;
 let computerScore = 0;
-let round = 0;
-let humanScoreElement =  document.querySelector("#humanScore");
-let computerScoreElement =  document.querySelector("#computerScore");
+playGame();
 
 function getComputerChoice(){
     let randomNumberToChoice = Math.round(Math.random() * 2);
@@ -18,10 +16,17 @@ function getComputerChoice(){
     }
 }
 
-function playRound(){
-    console.warn("passe ici");
-    let humanChoice = this.textContent;
-    let computerChoice = getComputerChoice();
+function getHumanChoice(){
+    let humanChoice;
+    let availableChoices = ["rock","paper","scissors"];
+
+    while (!availableChoices.includes(humanChoice)){
+        humanChoice = prompt("Enter your choices bewteen rock, paper and scissors !");
+    }
+    return humanChoice;
+}
+
+function playRound(humanChoice,computerChoice){
     if(humanChoice == "rock"){
         if(computerChoice == "paper"){ computerScore++;}
         else if(computerChoice == "scissors"){humanScore++;}
@@ -34,31 +39,21 @@ function playRound(){
         if(computerChoice == "rock"){ computerScore++;}
         else if(computerChoice == "paper"){humanScore++;}
     }
-
-    humanScoreElement.textContent = humanScore;
-    computerScoreElement.textContent = computerScore;
-
-    round++;
-    isGameContinue();
 }
 
-function isGameContinue(){
-    if(round>=5){
-        let resultText;
-        let resultElement = document.querySelector("#result");
-        userChoices.forEach(userChoice => {
-            userChoice.parentElement.removeChild(userChoice);
-        });
-
-        if(humanScore > computerScore){resultText = "vous avez gagné!";}
-        else if(humanScore < computerScore){resultText = "vous avez perdu!";}
-        else if(humanScore == computerScore){resultText = "vous avez fait égalité!";}
-
-        resultElement.textContent = resultText;
+function playGame(){
+    for(let i=0;i<5;i++){
+        let humanSelection = getHumanChoice();
+        humanSelection = humanSelection.toLowerCase();
+        computerSelection = getComputerChoice();
+        console.warn(humanSelection);
+        console.warn(computerSelection);
+        playRound(humanSelection,computerSelection);
+        console.warn(humanScore);
+        console.warn(computerScore);
     }
-}
 
-let userChoices = document.querySelectorAll(".humanChoice");
-userChoices.forEach(userChoice => {
-    userChoice.addEventListener("click",playRound);
-});
+    if(humanScore > computerScore){console.warn("vous avez gagné!");}
+    else if(humanScore < computerScore){console.warn("vous avez perdu!");}
+    else if(humanScore == computerScore){console.warn("vous avez fait égalité!");}
+}
