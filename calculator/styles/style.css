@@ -1,0 +1,18 @@
+.calculator_container{
+    display: flex;
+}
+
+.operator_container{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    width: 25px;
+    height: 25px;
+    margin: 2px;
+}
+
+.result{
+    margin-top: 20px;
+}
